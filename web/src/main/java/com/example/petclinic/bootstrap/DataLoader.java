@@ -20,6 +20,7 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        System.out.println("Deneme");
         Owner owner1 = new Owner();
         owner1.setId(1L);
         owner1.setFirstName("Hasan");
