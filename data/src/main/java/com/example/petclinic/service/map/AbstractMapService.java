@@ -29,8 +29,8 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> 
         return object;
     }
 
-    public void deleteById(ID id) {
-        map.remove(id);
+    public void deleteById(ID objectId) {
+        map.remove(objectId);
     }
 
     public void delete(T object) {
