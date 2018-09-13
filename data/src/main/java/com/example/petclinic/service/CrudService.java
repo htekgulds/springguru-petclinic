@@ -2,15 +2,15 @@ package com.example.petclinic.service;
 
 import java.util.Set;
 
-public interface CrudService<T, ID> {
+public interface CrudService<T, S> {
 
     Set<T> findAll();
 
-    T findById(ID id);
+    T findById(S id);
 
     T save(T object);
 
     void delete(T object);
 
-    void deleteById(ID objectId);
+    void deleteById(S id);
 }

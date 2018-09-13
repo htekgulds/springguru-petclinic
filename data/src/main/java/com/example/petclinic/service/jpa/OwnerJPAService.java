@@ -3,10 +3,14 @@ package com.example.petclinic.service.jpa;
 import com.example.petclinic.model.Owner;
 import com.example.petclinic.repository.OwnerRepository;
 import com.example.petclinic.service.CrudService;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
+@Service
+@Profile("jpa")
 public class OwnerJPAService implements CrudService<Owner, Long> {
 
     private OwnerRepository ownerRepository;
@@ -24,8 +28,7 @@ public class OwnerJPAService implements CrudService<Owner, Long> {
 
     @Override
     public Owner findById(Long id) {
-        return ownerRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Owner not found wit id: " + id));
+        return ownerRepository.findById(id).orElse(null);
     }
 
     @Override
@@ -39,7 +42,7 @@ public class OwnerJPAService implements CrudService<Owner, Long> {
     }
 
     @Override
-    public void deleteById(Long objectId) {
-        ownerRepository.deleteById(objectId);
+    public void deleteById(Long id) {
+        ownerRepository.deleteById(id);
     }
 }
