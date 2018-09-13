@@ -1,10 +1,7 @@
 package com.example.petclinic.bootstrap;
 
 import com.example.petclinic.model.*;
-import com.example.petclinic.service.OwnerService;
-import com.example.petclinic.service.PetTypeService;
-import com.example.petclinic.service.SpecialtyService;
-import com.example.petclinic.service.VetService;
+import com.example.petclinic.service.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -15,14 +12,24 @@ public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    private final PetService petService;
     private final PetTypeService petTypeService;
     private final SpecialtyService specialtyService;
+    private final VisitService visitService;
 
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialtyService specialtyService) {
+    public DataLoader(
+            OwnerService ownerService,
+            VetService vetService,
+            PetService petService,
+            PetTypeService petTypeService,
+            SpecialtyService specialtyService,
+            VisitService visitService) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.petService = petService;
         this.petTypeService = petTypeService;
         this.specialtyService = specialtyService;
+        this.visitService = visitService;
     }
 
     @Override
@@ -58,6 +65,7 @@ public class DataLoader implements CommandLineRunner {
         pet1.setType(savedDog);
         pet1.setOwner(owner1);
         pet1.setBirthDate(LocalDate.now());
+        owner1.getPets().add(pet1);
 
         ownerService.save(owner1);
 
@@ -73,6 +81,7 @@ public class DataLoader implements CommandLineRunner {
         pet2.setType(savedCat);
         pet2.setOwner(owner2);
         pet2.setBirthDate(LocalDate.now());
+        owner2.getPets().add(pet2);
 
         ownerService.save(owner2);
 
@@ -105,5 +114,18 @@ public class DataLoader implements CommandLineRunner {
         vetService.save(vet2);
 
         System.out.println("Loaded vets...");
+
+//        Visits
+        Visit visit1 = new Visit();
+        visit1.setDate(LocalDate.now());
+        visit1.setDescription("Some visit");
+        visit1.setPet(pet1);
+        visitService.save(visit1);
+
+        Visit visit2 = new Visit();
+        visit2.setDate(LocalDate.now());
+        visit2.setDescription("Some visit 2");
+        visit2.setPet(pet2);
+        visitService.save(visit2);
     }
 }
